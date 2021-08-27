@@ -1,6 +1,8 @@
 import * as bcrypt from 'bcrypt';
 import {
   BaseEntity,
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
@@ -40,9 +42,16 @@ export class User extends BaseEntity {
   @UpdateDateColumn()
   updated_at: Date;
 
+  @BeforeInsert()
+  @BeforeUpdate()
+  async setPassword(password: string): Promise<void> {
+    const salt = await bcrypt.genSalt();
+
+    this.password = await bcrypt.hash(password || this.password, salt);
+  }
+
   async checkPassword(password: string): Promise<boolean> {
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
+    const hash = await bcrypt.hash(password, 12);
     return hash === this.password;
   }
 }
