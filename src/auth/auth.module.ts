@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from 'src/user/repositories/user.repository';
+import { isUniqueValidator } from 'src/utils/custom-validation/validation-constraint';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { IAuthService } from './interfaces/IAuthService';
@@ -20,7 +21,11 @@ import { JwtStrategy } from './jwt.strategy';
     }),
   ],
   controllers: [AuthController],
-  providers: [{ provide: IAuthService, useClass: AuthService }, JwtStrategy],
+  providers: [
+    { provide: IAuthService, useClass: AuthService },
+    JwtStrategy,
+    isUniqueValidator,
+  ],
   exports: [
     JwtStrategy,
     PassportModule,

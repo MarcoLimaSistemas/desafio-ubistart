@@ -45,9 +45,7 @@ export class User extends BaseEntity {
   @BeforeInsert()
   @BeforeUpdate()
   async setPassword(password: string): Promise<void> {
-    const salt = await bcrypt.genSalt();
-
-    this.password = await bcrypt.hash(password || this.password, salt);
+    this.password = await bcrypt.hash(password || this.password, 12);
   }
 
   async checkPassword(password: string): Promise<boolean> {

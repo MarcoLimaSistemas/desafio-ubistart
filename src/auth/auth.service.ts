@@ -28,14 +28,16 @@ export class AuthService extends IAuthService {
     const token = await this.jwtService.sign(jwtPayload);
 
     return {
-      user,
       token,
     };
   }
 
   async signIn(credentialsDto: CredentialsDto): Promise<ReturnUserDto> {
-    console.log(credentialsDto);
-    const user = await this.userRepository.checkCredentials(credentialsDto);
+    const user = await this.userRepository.findOne({
+      where: {
+        email: credentialsDto.email,
+      },
+    });
 
     if (!user) {
       throw new UnauthorizedException('Credenciais inválidas');
@@ -46,9 +48,6 @@ export class AuthService extends IAuthService {
     };
     const token = await this.jwtService.sign(jwtPayload);
 
-    return {
-      user: user,
-      token: token,
-    };
+    return { token };
   }
 }

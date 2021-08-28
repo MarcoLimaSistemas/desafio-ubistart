@@ -6,9 +6,13 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import { ROLE } from '../dto/role-enum';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { User } from '../entities/user.entity';
+import { IUserRepository } from '../interfaces/IUserRepository';
 
 @EntityRepository(User)
-export class UserRepository extends Repository<User> {
+export class UserRepository
+  extends Repository<User>
+  implements IUserRepository
+{
   async createUser(createUserDto: CreateUserDto, role: ROLE): Promise<User> {
     const { name, email, password } = createUserDto;
 

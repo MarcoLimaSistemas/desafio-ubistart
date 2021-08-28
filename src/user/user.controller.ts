@@ -4,7 +4,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { User } from './entities/user.entity';
 import { IUserService } from './interfaces/IUserService';
 
-@Controller('user')
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: IUserService) {}
 
@@ -12,5 +12,10 @@ export class UserController {
   @UseGuards(AuthGuard(), RolesGuard)
   async findAll(): Promise<User[]> {
     return await this.userService.findAll();
+  }
+
+  @Get('/one')
+  async findOne(): Promise<User> {
+    return await this.userService.find('1');
   }
 }
