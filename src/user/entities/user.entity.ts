@@ -1,4 +1,5 @@
 import * as bcrypt from 'bcrypt';
+import { Todo } from 'src/todo/entities/todo.entity';
 import {
   BaseEntity,
   BeforeInsert,
@@ -6,6 +7,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
   UpdateDateColumn,
@@ -41,6 +43,9 @@ export class User extends BaseEntity {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => Todo, (todo) => todo.user)
+  todos: Todo[];
 
   @BeforeInsert()
   @BeforeUpdate()

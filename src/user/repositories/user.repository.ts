@@ -14,13 +14,9 @@ export class UserRepository
   implements IUserRepository
 {
   async createUser(createUserDto: CreateUserDto, role: ROLE): Promise<User> {
-    const { name, email, password } = createUserDto;
-
     const user = new User();
-    user.name = name;
-    user.email = email;
+    Object.assign<User, CreateUserDto>(user, createUserDto);
     user.role = role;
-    user.password = password;
     try {
       await user.save();
       return user;

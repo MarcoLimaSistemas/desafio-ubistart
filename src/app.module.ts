@@ -5,6 +5,10 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { UserController } from './user/user.controller';
 import { AuthController } from './auth/auth.controller';
+import { TodoModule } from './todo/todo.module';
+import { TodoController } from './todo/todo.controller';
+import { SeedingModule } from './seeding/SeedingModule';
+import { SheredModule } from './shered/shered.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -22,8 +26,11 @@ import { AuthController } from './auth/auth.controller';
     }),
     UserModule,
     AuthModule,
+    TodoModule,
+    SeedingModule,
+    SheredModule,
   ],
-  controllers: [UserController, AuthController],
+  controllers: [UserController, AuthController, TodoController],
   providers: [],
 })
 export class AppModule {}

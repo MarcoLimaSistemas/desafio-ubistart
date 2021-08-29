@@ -1,8 +1,3 @@
-#!/bin/bash
-
-echo "\n\n\nNpm install:"
-npm install
-
 # echo "\n\n\nAwait test:"
 # npm run test
 
@@ -22,5 +17,3 @@ else
 fi
 fi
 
-echo "\n\n\Npm start:"
-npm run start:dev
