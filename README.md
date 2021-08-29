@@ -1,49 +1,54 @@
-## Description
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
+</p>
+ 
+  <p align="center">Projeto de estudos gerado a partir dos vídeos do <a href="https://youtube.com/angelogluz" target="blank">Canal do Youtube</a>.</p>
+    <p align="center">
+<a href="https://github.com/angelogluz/nest-angelo-youtube/stargazers"><img src="https://img.shields.io/github/stars/angelogluz/nest-angelo-youtube" alt="Stars" /></a>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+  <a href="https://github.com/angelogluz/nest-angelo-youtube/commits/master">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/angelogluz/nest-angelo-youtube.svg">
+  </a>
+    <a href="https://github.com/angelogluz/nest-angelo-youtube/issues">
+    <img alt="Repository issues" src="https://img.shields.io/github/issues/angelogluz/nest-angelo-youtube.svg">
+  </a>
+    <a href="https://github.com/angelogluz/nest-angelo-youtube/pulls">
+    <img alt="Repository pulls" src="https://img.shields.io/github/issues-pr/angelogluz/nest-angelo-youtube.svg">
+  </a>
+    <a href="https://github.com/angelogluz/Youtube-codes/blob/master/LICENSE">
+    <img alt="Repository LICENSE" src="https://img.shields.io/github/license/angelogluz/nest-angelo-youtube.svg">
+  </a>
+</p>
 
-## Installation
+
+## 🔐 Pré requisitos
+
+<a href="https://www.docker.com/">Docker</a> &nbsp;
+  
+<a href="https://docs.docker.com/compose/install/">Docker-compose</a> &nbsp;
+
+
+## Para que o Typescript funcione no Host apropriadamente instale as dependências
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+## Executando a aplicação
 
 ```bash
 # development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+$ docker-compose up
 ```
 
-## Test
+## Docs
 
-```bash
-# unit tests
-$ npm run test
+Importe o arquivo para o insomnia:
 
-# e2e tests
-$ npm run test:e2e
+![Alt Text](./docs/import_from_file.gif)
 
-# test coverage
-$ npm run test:cov
-```
 
-## Support
+Alterar nível de acesso:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+![Alt Text](./docs/change_bearer_token.gif)
