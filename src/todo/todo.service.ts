@@ -4,7 +4,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
+import { Paginated, PaginateQuery } from 'nestjs-paginate';
+import { ROLE } from 'src/user/dto/role-enum';
 import { User } from 'src/user/entities/user.entity';
 import { InsertTodoDto } from './dto/insert-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
@@ -27,16 +28,19 @@ export class TodoService extends ITodoService {
   ): Promise<Todo | Error> {
     return await this.todoRepository.insertTodo(insertTodoDto, user);
   }
-  async listTodos(query: PaginateQuery, user: User): Promise<Paginated<Todo>> {
-    return paginate(query, this.todoRepository, {
-      sortableColumns: ['id', 'name'],
-      searchableColumns: ['name'],
-      defaultSortBy: [['id', 'DESC']],
-      where: {
-        //Eu quero listar apenas os MEUS itens
-        user: { id: user.id },
-      },
-    });
+  async listTodos(
+    query: PaginateQuery,
+    user: User,
+    filter: string,
+  ): Promise<Paginated<Todo>> {
+    switch (user.role) {
+      case ROLE.ADMIN:
+        return await this.todoRepository.listFromAdmin(query, filter);
+      case ROLE.USER:
+        return await this.todoRepository.listFromUser(query, user);
+      default:
+        throw new Error('Função não implementada para user.role fornecida');
+    }
   }
   async updateTodo(
     idTodo: string,

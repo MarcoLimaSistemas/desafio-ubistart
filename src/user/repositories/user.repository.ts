@@ -43,20 +43,6 @@ export class UserRepository
     }
   }
 
-  async createAdmin(): Promise<User> {
-    const user = this.create();
-    user.email = 'admin@admin.com';
-    user.name = 'Usuário Admin';
-    user.role = ROLE.ADMIN;
-
-    try {
-      await user.save();
-      return user;
-    } catch (error) {
-      throw new InternalServerErrorException('Error ao cadastrar usuário.');
-    }
-  }
-
   async checkCredentials(credentialsDto: CredentialsDto): Promise<User> {
     const { email, password } = credentialsDto;
 

@@ -1,3 +1,4 @@
+import { PaginateQuery, Paginated } from 'nestjs-paginate';
 import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { InsertTodoDto } from '../dto/insert-todo.dto';
@@ -8,4 +9,13 @@ export default abstract class ITodoRepository extends Repository<Todo> {
     insertTodoDto: InsertTodoDto,
     user: User,
   ): Promise<Todo | Error>;
+
+  abstract listFromUser(
+    query: PaginateQuery,
+    user: User,
+  ): Promise<Paginated<Todo>>;
+  abstract listFromAdmin(
+    query: PaginateQuery,
+    filter: string,
+  ): Promise<Paginated<Todo>>;
 }

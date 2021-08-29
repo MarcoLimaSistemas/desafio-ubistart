@@ -8,5 +8,9 @@ export abstract class ITodoService {
     insertTodoDto: InsertTodoDto,
     user: User,
   ): Promise<Todo | Error>;
-  abstract listTodos(query: PaginateQuery, user: User): Promise<any>;
+  abstract listTodos(
+    query: PaginateQuery,
+    user: User,
+    filter: string,
+  ): Promise<any>;
 }

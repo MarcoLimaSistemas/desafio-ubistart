@@ -8,7 +8,6 @@ import { AuthController } from './auth/auth.controller';
 import { TodoModule } from './todo/todo.module';
 import { TodoController } from './todo/todo.controller';
 import { SeedingModule } from './seeding/SeedingModule';
-import { SheredModule } from './shered/shered.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -28,7 +27,6 @@ import { SheredModule } from './shered/shered.module';
     AuthModule,
     TodoModule,
     SeedingModule,
-    SheredModule,
   ],
   controllers: [UserController, AuthController, TodoController],
   providers: [],

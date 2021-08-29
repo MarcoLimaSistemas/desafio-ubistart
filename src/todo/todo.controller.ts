@@ -5,6 +5,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
@@ -31,8 +32,16 @@ export class TodoController {
   }
   @Get('/')
   @UseGuards(AuthGuard(), RolesGuard)
-  async listTodos(@Paginate() query: PaginateQuery, @GetUser() user: User) {
-    const paginatedTodos = await this.todoService.listTodos(query, user);
+  async listTodos(
+    @Query('filter') filter: string,
+    @Paginate() query: PaginateQuery,
+    @GetUser() user: User,
+  ) {
+    const paginatedTodos = await this.todoService.listTodos(
+      query,
+      user,
+      filter,
+    );
     return paginatedTodos;
   }
   //Como um usuário eu quero editar um TODO, então poderei atualizar minha lista

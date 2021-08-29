@@ -9,8 +9,6 @@ import { UpdateUserDto } from './../dto/update-user.dto';
 export interface IUserRepository extends Repository<User> {
   createUser(createUserDto: CreateUserDto, role: ROLE): Promise<User>;
 
-  createAdmin(): Promise<User>;
-
   checkCredentials(credentialsDto: CredentialsDto): Promise<User>;
 
   updateUser(user: User, updateUserDto: UpdateUserDto): Promise<User>;
