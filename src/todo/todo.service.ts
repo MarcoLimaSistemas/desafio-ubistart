@@ -42,19 +42,16 @@ export class TodoService extends ITodoService {
         throw new Error('Função não implementada para user.role fornecida');
     }
   }
+  
   async updateTodo(
     idTodo: string,
     updateTodoDto: UpdateTodoDto,
   ): Promise<Todo> {
-    const todo = await this.todoRepository.findOne({ where: { id: idTodo } });
+    const todo = await this.todoRepository.findOneOrFail({ where: { id: idTodo } });
     if (!todo) {
       throw new NotFoundException('Tarefa não encontrada.');
     }
-    if (todo.status == Status.FINISHED) {
-      throw new BadRequestException(
-        'Uma tarefa concluída não pode ser atualizada',
-      );
-    }
+  
     Object.assign(todo, updateTodoDto);  
     try {
       await todo.save();

@@ -27,10 +27,11 @@ export class TodoSubscriber implements EntitySubscriberInterface<Todo> {
     }
   }
 
-  afterInsert(todo: any) {
-    todo.status = Status[todo.status];
+
+  beforeUpdate(todo: any) {
+    todo.entity.status = Status[todo.entity.status];
   }
-  afterUpdate(todo: any) {
-    todo.status = Status[todo.status];
+  beforeInsert(todo: any) {
+    todo.entity.status = Status[todo.entity.status];
   }
 }
