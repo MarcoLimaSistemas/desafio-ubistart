@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -15,6 +16,7 @@ import { Paginate, PaginateQuery } from 'nestjs-paginate';
 import { GetUser } from 'src/auth/decoretors/get-user.decoretor';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { User } from 'src/user/entities/user.entity';
+import { EntityNotFoundError } from 'typeorm';
 import { InsertTodoDto } from './dto/insert-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 
@@ -49,6 +51,7 @@ export class TodoController {
     @Param('id') id: string,
     @Body(ValidationPipe) updateTodoDto: UpdateTodoDto,
   ) {
-    return await this.todoService.updateTodo(id, updateTodoDto);
+    const todo = await this.todoService.findOneByIdOrFail({ where: { id: id } });
+    return await this.todoService.updateTodo(todo, updateTodoDto);
   }
 }

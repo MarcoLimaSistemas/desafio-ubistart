@@ -1,6 +1,6 @@
 import { PaginateQuery, Paginated } from 'nestjs-paginate';
 import { User } from 'src/user/entities/user.entity';
-import { Repository } from 'typeorm';
+import { EntityNotFoundError, FindOneOptions, Repository } from 'typeorm';
 import { InsertTodoDto } from '../dto/insert-todo.dto';
 import { Todo } from '../entities/todo.entity';
 
@@ -18,4 +18,7 @@ export default abstract class ITodoRepository extends Repository<Todo> {
     query: PaginateQuery,
     filter: string,
   ): Promise<Paginated<Todo>>;
+
+  abstract findOneByIdOrFail(options?: FindOneOptions<Todo>): Promise<Todo> 
+  
 }

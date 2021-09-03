@@ -1,7 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { User } from 'src/user/entities/user.entity';
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityNotFoundError, EntityRepository, FindOneOptions, Repository } from 'typeorm';
 import { InsertTodoDto } from '../dto/insert-todo.dto';
 import { Todo } from '../entities/todo.entity';
 import ITodoRepository from '../interfaces/ITodoRepository';
@@ -11,6 +11,7 @@ export default class TodoRepository
   extends Repository<Todo>
   implements ITodoRepository
 {
+
   async insertTodo(
     insertTodoDto: InsertTodoDto,
     user: User,
@@ -70,5 +71,9 @@ export default class TodoRepository
         (todo) => todo.status_deadline == filter,
       );
     return todosPaginated;
+  }
+
+  async findOneByIdOrFail(options?: FindOneOptions<Todo>): Promise<Todo> {
+     return await this.findOneOrFail(options);
   }
 }

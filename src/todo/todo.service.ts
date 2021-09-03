@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -7,6 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Paginated, PaginateQuery } from 'nestjs-paginate';
 import { ROLE } from 'src/user/dto/role-enum';
 import { User } from 'src/user/entities/user.entity';
+import { EntityNotFoundError, FindOneOptions } from 'typeorm';
 import { InsertTodoDto } from './dto/insert-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { Status, Todo } from './entities/todo.entity';
@@ -16,6 +18,7 @@ import TodoRepository from './repositories/todo-repository';
 
 @Injectable()
 export class TodoService extends ITodoService {
+
   constructor(
     @InjectRepository(TodoRepository)
     private readonly todoRepository: ITodoRepository,
@@ -44,14 +47,12 @@ export class TodoService extends ITodoService {
   }
   
   async updateTodo(
-    idTodo: string,
+    todo: Todo,
     updateTodoDto: UpdateTodoDto,
-  ): Promise<Todo> {
-    const todo = await this.todoRepository.findOneOrFail({ where: { id: idTodo } });
-    if (!todo) {
-      throw new NotFoundException('Tarefa não encontrada.');
+  ): Promise<Todo> { 
+    if (todo.status == Status.FINISHED) {
+      throw new ConflictException('Não é possivel atualizar um todo finalizado');
     }
-  
     Object.assign(todo, updateTodoDto);  
     try {
       await todo.save();
@@ -60,5 +61,8 @@ export class TodoService extends ITodoService {
       console.error(error);
       throw new BadRequestException('Error ao atualizar a tarefa.');
     }
+  }
+  async findOneByIdOrFail(options?: FindOneOptions<Todo>): Promise<Todo> {
+    return await this.todoRepository.findOneOrFail(options);
   }
 }
