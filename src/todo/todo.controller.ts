@@ -53,5 +53,6 @@ export class TodoController {
   ) {
     const todo = await this.todoService.findOneByIdOrFail({ where: { id: id } });
     return await this.todoService.updateTodo(todo, updateTodoDto);
+    
   }
 }
