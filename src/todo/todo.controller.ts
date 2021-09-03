@@ -20,18 +20,17 @@ import { UpdateTodoDto } from './dto/update-todo.dto';
 
 import { TodoService } from './todo.service';
 @Controller('todos')
+@UseGuards(AuthGuard(), RolesGuard)
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
-  @Post('/')
-  @UseGuards(AuthGuard(), RolesGuard)
+  @Post('/')  
   async insertTodo(
     @Body(ValidationPipe) insertTodoDto: InsertTodoDto,
     @GetUser() user: User,
   ) {
     return await this.todoService.insertTodo(insertTodoDto, user);
   }
-  @Get('/')
-  @UseGuards(AuthGuard(), RolesGuard)
+  @Get('/') 
   async listTodos(
     @Query('filter') filter: string,
     @Paginate() query: PaginateQuery,
@@ -46,7 +45,6 @@ export class TodoController {
   }
   //Como um usuário eu quero editar um TODO, então poderei atualizar minha lista
   @Put('/:id')
-  @UseGuards(AuthGuard(), RolesGuard)
   async updateTodo(
     @Param('id') id: string,
     @Body(ValidationPipe) updateTodoDto: UpdateTodoDto,

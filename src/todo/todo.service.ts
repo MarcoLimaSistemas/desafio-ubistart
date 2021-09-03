@@ -55,9 +55,7 @@ export class TodoService extends ITodoService {
         'Uma tarefa concluída não pode ser atualizada',
       );
     }
-    Object.assign(todo, updateTodoDto);
-    // TODO: Não consegui colocar em um hook, refatorar caso encontre a solução
-    todo.status = Status[updateTodoDto.status];
+    Object.assign(todo, updateTodoDto);  
     try {
       await todo.save();
       return todo;

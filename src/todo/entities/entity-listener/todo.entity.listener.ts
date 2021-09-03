@@ -26,4 +26,11 @@ export class TodoSubscriber implements EntitySubscriberInterface<Todo> {
       todo.status_deadline = 'NO PRAZO';
     }
   }
+
+  afterInsert(todo: any) {
+    todo.status = Status[todo.status];
+  }
+  afterUpdate(todo: any) {
+    todo.status = Status[todo.status];
+  }
 }
